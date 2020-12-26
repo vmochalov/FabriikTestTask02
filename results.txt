@@ -1,0 +1,93 @@
+============================= test session starts =============================
+platform win32 -- Python 3.9.1, pytest-6.2.1, py-1.10.0, pluggy-0.13.1 -- c:\users\natal\pycharmprojects\fabriiktesttask\venv\scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\natal\PycharmProjects\FabriikTestTask, configfile: pytest.ini
+collecting ... collected 23 items
+
+test_colour_game.py::test_fin PASSED                                     [  4%]
+test_colour_game.py::test_eng PASSED                                     [  8%]
+test_colour_game.py::test_swe FAILED                                     [ 13%]
+test_colour_game.py::test_score_match PASSED                             [ 17%]
+test_colour_game.py::test_bat PASSED                                     [ 21%]
+test_colour_game.py::test_mole_from PASSED                               [ 26%]
+test_colour_game.py::test_mole_till PASSED                               [ 30%]
+test_colour_game.py::test_dog_from PASSED                                [ 34%]
+test_colour_game.py::test_dog_till PASSED                                [ 39%]
+test_colour_game.py::test_cat_from PASSED                                [ 43%]
+test_colour_game.py::test_cat_till PASSED                                [ 47%]
+test_colour_game.py::test_tiger_from PASSED                              [ 52%]
+test_colour_game.py::test_tiger_till PASSED                              [ 56%]
+test_colour_game.py::test_hawk_from PASSED                               [ 60%]
+test_colour_game.py::test_hawk_till PASSED                               [ 65%]
+test_colour_game.py::test_robot_from PASSED                              [ 69%]
+test_colour_game.py::test_best_result_inc PASSED                         [ 73%]
+test_colour_game.py::test_best_result_dec PASSED                         [ 78%]
+test_colour_game.py::test_timer_run PASSED                               [ 82%]
+test_colour_game.py::test_timer_rerun FAILED                             [ 86%]
+test_colour_game.py::test_wrong_click PASSED                             [ 91%]
+test_colour_game.py::test_timer_decrease PASSED                          [ 95%]
+test_colour_game.py::test_penalty_match PASSED                           [100%]
+
+================================== FAILURES ===================================
+__________________________________ test_swe ___________________________________
+
+    @pytest.mark.smoke
+    @pytest.mark.positive
+    def test_swe():
+        page = GamePage(driver)
+        page.go_to_site(SWE_URL)
+>       assert page.find_logo()
+
+test_colour_game.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+page_objects.py:67: in find_logo
+    return self.find_element(Locators.LOGO)
+page_objects.py:16: in find_element
+    return WebDriverWait(self.driver, time).until(ec.visibility_of_element_located(locator))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="e424facd7c352882dcec9bdf5b126bab")>
+method = <selenium.webdriver.support.expected_conditions.visibility_of_element_located object at 0x0000020EE66A6BB0>
+message = ''
+
+    def until(self, method, message=''):
+        """Calls the method provided with the driver as an argument until the \
+        return value is not False."""
+        screen = None
+        stacktrace = None
+    
+        end_time = time.time() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, 'screen', None)
+                stacktrace = getattr(exc, 'stacktrace', None)
+            time.sleep(self._poll)
+            if time.time() > end_time:
+                break
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+venv\lib\site-packages\selenium\webdriver\support\wait.py:80: TimeoutException
+______________________________ test_timer_rerun _______________________________
+
+    @pytest.mark.positive
+    def test_timer_rerun():
+        page = GamePage(driver)
+        page.go_to_site()
+        page.click_right_square()
+        time.sleep(random.randint(1, 10))
+        page.click_right_square()
+>       assert page.timer_run() == TIMER_START
+E       assert 6 == 15
+E         +6
+E         -15
+
+test_colour_game.py:213: AssertionError
+=========================== short test summary info ===========================
+FAILED test_colour_game.py::test_swe - selenium.common.exceptions.TimeoutExce...
+FAILED test_colour_game.py::test_timer_rerun - assert 6 == 15
+================== 2 failed, 21 passed in 304.92s (0:05:04) ===================
